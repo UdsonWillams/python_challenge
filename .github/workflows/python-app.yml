@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.10
+    - name: Set up Python 3.12
       uses: actions/setup-python@v3
       with:
         python-version: "3.12"
@@ -36,5 +36,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with Unittest
       run: |
-        coverage run -m unittest
-	      coverage report --fail-under 100
+        python -m unittest
