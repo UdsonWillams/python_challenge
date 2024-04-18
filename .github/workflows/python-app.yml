@@ -12,7 +12,6 @@ on:
 permissions:
   contents: read
 
-
 jobs:
   build:
 
@@ -37,4 +36,5 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with Unittest
       run: |
-        unittest
+        coverage run -m unittest
+	      coverage report --fail-under 100
