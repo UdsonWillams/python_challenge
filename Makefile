@@ -1,4 +1,4 @@
-run:
+runserver:
 	uvicorn app.main:app --reload
 coverage:
 	coverage run -m unittest

@@ -2,7 +2,6 @@ import logging
 from logging.config import dictConfig
 
 from fastapi import FastAPI
-from uvicorn import run
 
 from app.api.v1.api_health import router as health_check_router
 from app.api.v1.words.sort.views import router as sort_router
@@ -22,13 +21,3 @@ app.include_router(health_check_router)
 app.include_router(sort_router, prefix=api_v1)
 app.include_router(vowel_count_router, prefix=api_v1)
 app.add_middleware(ResponseTimeMiddleware)
-
-
-if __name__ == "__main__":
-    run(
-        app=app,
-        host=settings.HOST,
-        port=settings.PORT,
-        reload=settings.IS_DEBUG,
-        workers=settings.WORKERS,
-    )

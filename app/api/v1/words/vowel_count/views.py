@@ -14,8 +14,11 @@ from app.exceptions.default_exceptions import InternalServerErrorException
 router = APIRouter(tags=["Words"])
 logger = logging.getLogger(__name__)
 
+
 @router.post(
-    path="/vowel_count", response_class=JSONResponse, status_code=status.HTTP_200_OK
+    path="/words/vowel-count",
+    response_class=JSONResponse,
+    status_code=status.HTTP_200_OK,
 )
 def vowel_count(payload: VowelCountRequest) -> JSONResponse:
     """ """

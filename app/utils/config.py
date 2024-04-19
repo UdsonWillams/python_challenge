@@ -10,10 +10,6 @@ class Settings(BaseSettings):
 
     ENVIROMENT: str = "local"
     LOG_ENVIROMENT: str = "INFO"
-    HOST: str = "localhost"
-    PORT: str = "8000"
-    IS_DEBUG: bool = False
-    WORKERS: int = 3
 
     class Config:
         env_file = ".env"
