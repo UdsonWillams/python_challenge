@@ -51,6 +51,8 @@ Exemplo dos endpoints:
 /api/v1/words/vowel_count :: para contagem das vogais das palavras passadas.
 ```
 
+test CI
+
 <!-- Markdown link & img dfn's -->
 [python-image]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [python-url]: https://www.python.org/
