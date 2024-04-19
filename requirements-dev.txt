@@ -10,5 +10,3 @@ pre-commit-hooks==4.5.0
 
 #tests
 coverage==7.4.2
-locust==2.23.1
-robotframework==7.0
