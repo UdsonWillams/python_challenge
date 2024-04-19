@@ -28,4 +28,4 @@ RUN pip install -r requirements-dev.txt
 EXPOSE 8000
 
 # Start up the backend server
-CMD uvicorn app.main:app --reload
+CMD uvicorn app.main:app --reload --host=0.0.0.0 --port=8000
