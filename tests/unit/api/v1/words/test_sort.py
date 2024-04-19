@@ -13,15 +13,47 @@ class SortWordsTestCase(DefaultTestCase):
 
     def setUp(self) -> None:
         self.sort_words_asc_request = {
-            "words": ["batman", "robin", "coringa"],
+            "words": [
+                "batman",
+                "robin",
+                "coringa",
+                "supermen",
+                "diana",
+                "lobo",
+                "lanterna verde",
+            ],
             "order": "asc",
         }
         self.sort_words_desc_request = {
-            "words": ["batman", "robin", "coringa"],
+            "words": [
+                "batman",
+                "robin",
+                "coringa",
+                "supermen",
+                "diana",
+                "lobo",
+                "lanterna verde",
+            ],
             "order": "desc",
         }
-        self.sort_words_asc_response = ["batman", "coringa", "robin"]
-        self.sort_words_desc_response = ["robin", "coringa", "batman"]
+        self.sort_words_asc_response = [
+            "batman",
+            "coringa",
+            "diana",
+            "lanterna verde",
+            "lobo",
+            "robin",
+            "supermen",
+        ]
+        self.sort_words_desc_response = [
+            "supermen",
+            "robin",
+            "lobo",
+            "lanterna verde",
+            "diana",
+            "coringa",
+            "batman",
+        ]
         return super().setUp()
 
     def test_sort_words_asc_order(self):
