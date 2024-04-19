@@ -92,6 +92,3 @@ class SortWordsTestCase(DefaultTestCase):
         self.assertEqual(
             context_error.exception.status_code, status.HTTP_400_BAD_REQUEST
         )
-        self.assertEqual(
-            context_error.exception.status_code, status.HTTP_400_BAD_REQUEST
-        )
