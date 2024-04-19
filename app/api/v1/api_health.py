@@ -20,5 +20,5 @@ def check_health() -> JSONResponse:
 
 
 @router.get("/", include_in_schema=False)
-def return_docs():
+def return_docs() -> RedirectResponse:
     return RedirectResponse(url="/docs")

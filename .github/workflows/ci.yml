@@ -13,6 +13,7 @@ permissions:
 jobs:
   build:
 
+
     runs-on: ubuntu-latest
 
     steps:
@@ -42,4 +43,6 @@ jobs:
         isort .
     - name: Test with Unittest
       run: |
-        python -m unittest
+        pip install coverage
+        coverage run -m unittest
+        coverage report --fail-under 100

@@ -1,4 +1,5 @@
 import logging
+
 from app.api.v1.words.sort.exceptions import SortWordsException
 from app.api.v1.words.sort.models import (
     SortWordsRequest,
@@ -6,6 +7,7 @@ from app.api.v1.words.sort.models import (
 )
 
 logger = logging.getLogger(__name__)
+
 
 class SortWordService:
     def __init__(self) -> None:
@@ -22,7 +24,7 @@ class SortWordService:
                     sort_words.words.sort(reverse=True)
                     return sort_words.words
                 case _:
-                    return []
+                    return sort_words.words
         except Exception as error:
             logger.error("Unmapped error in SortWordService", extra={"error": error})
             raise SortWordsException()
