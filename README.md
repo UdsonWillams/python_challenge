@@ -1,4 +1,4 @@
-# Words API Project
+# BoilerPlate de um WebService utilizando FastApi
 > projeto de um webservice em FastApi
 
 [![Python Version][python-image]][python-url]
