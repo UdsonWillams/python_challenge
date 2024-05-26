@@ -10,6 +10,15 @@ class Settings(BaseSettings):
 
     ENVIROMENT: str = "local"
     LOG_ENVIROMENT: str = "INFO"
+    HOST: str = "localhost"
+    PORT: str = "8000"
+    IS_DEBUG: bool = False
+    WORKERS: int = 3
+
+    # Mongo
+    MONGO_USER: str = "root"
+    MONGO_PASSWORD: str = "pass"
+    MONGO_PORT: int = 27017
 
     class Config:
         env_file = ".env"
