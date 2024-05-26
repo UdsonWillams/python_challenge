@@ -2,8 +2,11 @@ from typing import (
     Any,
     Dict,
 )
-from app.exceptions.default_exceptions import DefaultApiException
+
 from fastapi import status
+
+from app.exceptions.default_exceptions import DefaultApiException
+
 
 class VowelCountException(DefaultApiException):
     def __init__(

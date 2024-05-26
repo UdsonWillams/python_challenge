@@ -1,6 +1,12 @@
-from typing import Any, Dict
+from typing import (
+    Any,
+    Dict,
+)
 
-from fastapi import HTTPException, status
+from fastapi import (
+    HTTPException,
+    status,
+)
 
 
 class DefaultApiException(HTTPException):

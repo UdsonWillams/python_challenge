@@ -1,16 +1,16 @@
 import logging
-from unidecode import unidecode
 from collections import Counter
+from types import SimpleNamespace
+
+from unidecode import unidecode
 
 from app.api.v1.words.vowel_count.exceptions import VowelCountException
 from app.api.v1.words.vowel_count.models import VowelCountResponse
 
 logger = logging.getLogger(__name__)
-from types import SimpleNamespace
 
-VOWELS = SimpleNamespace(
-    A="a", E="e", I="i", O="o", U="u"
-)
+
+VOWELS = SimpleNamespace(A="a", E="e", I="i", O="o", U="u")
 
 
 class VowelCountService:
@@ -29,11 +29,11 @@ class VowelCountService:
                 word_count = Counter(decode_word)
                 count = sum(
                     [
-                        word_count[VOWELS.A], 
-                        word_count[VOWELS.E], 
-                        word_count[VOWELS.I], 
-                        word_count[VOWELS.O], 
-                        word_count[VOWELS.U]
+                        word_count[VOWELS.A],
+                        word_count[VOWELS.E],
+                        word_count[VOWELS.I],
+                        word_count[VOWELS.O],
+                        word_count[VOWELS.U],
                     ]
                 )
                 response.update({word: count})

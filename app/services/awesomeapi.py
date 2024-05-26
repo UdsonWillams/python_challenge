@@ -1,12 +1,12 @@
 import logging
 
 from fastapi import status
-from httpx import Client, Response
-
-from app.exceptions.default_exceptions import (
-    ApiInvalidResponseException,
-    CurrencyInvalidValuesException,
+from httpx import (
+    Client,
+    Response,
 )
+
+from app.exceptions.default_exceptions import ApiInvalidResponseException
 
 logger = logging.getLogger(__name__)
 BASE_URL = "https://economia.awesomeapi.com.br"

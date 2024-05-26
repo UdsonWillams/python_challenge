@@ -57,7 +57,7 @@ repos:
         name: safety
         entry: safety
         language: system
-        files: pyproject.toml|requirements #Caso de usar poetry | Requirements txt.
+        files: requirements.txt # pyproject.toml no caso de usar poetry
         args: [check, --full-report, --file]
 
       - id: bandit
