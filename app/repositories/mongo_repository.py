@@ -38,6 +38,42 @@ class MongoRepository:
             raise MongoRepositoryTransactionsException()
         return response
 
+    def get_by_acronym(self, db_name: str, collection: str, acronym: str) -> dict:
+        try:
+            db = self._get_database(db_name)
+            response = db[collection].find_one({"acronym": acronym})
+        except Exception as error:
+            logger.error(
+                f"DB retornou erro - GetByAcr | Erro: {error}", extra={"error": error}
+            )
+            raise MongoRepositoryTransactionsException()
+        return response
+
+    def get_all_currency(self, db_name: str, collection: str) -> list:
+        try:
+            db = self._get_database(db_name)
+            cursor = db[collection].find({})
+            store_cursor = []
+            for document in cursor:
+                store_cursor.append(document)
+        except Exception as error:
+            logger.error(
+                f"DB retornou erro - GetByAcr | Erro: {error}", extra={"error": error}
+            )
+            raise MongoRepositoryTransactionsException()
+        return store_cursor
+
+    def get_cached_date(self, db_name: str, collection: str) -> dict:
+        try:
+            db = self._get_database(db_name)
+            response = db[collection].find_one({"daily_time": True})
+        except Exception as error:
+            logger.error(
+                f"DB retornou erro - GetById | Erro: {error}", extra={"error": error}
+            )
+            raise MongoRepositoryTransactionsException()
+        return response
+
     def create(self, db_name: str, collection: str, data: dict):
         try:
             db = self._get_database(db_name)
@@ -59,6 +95,17 @@ class MongoRepository:
             raise MongoRepositoryTransactionsException()
         return response
 
+    def delete_by_acronym(self, db_name: str, collection: str, acronym: str) -> dict:
+        try:
+            db = self._get_database(db_name)
+            response = db[collection].delete_one({"acronym": acronym})
+        except Exception as error:
+            logger.error(
+                f"DB retornou erro - DelByAcr | Erro: {error}", extra={"error": error}
+            )
+            raise MongoRepositoryTransactionsException()
+        return response
+
     def update_by_id(self, db_name: str, collection: str, id: str, data: dict) -> dict:
         try:
             db = self._get_database(db_name)
@@ -66,6 +113,36 @@ class MongoRepository:
         except Exception as error:
             logger.error(
                 f"DB retornou erro - UpdtById | Erro: {error}", extra={"error": error}
+            )
+            raise MongoRepositoryTransactionsException()
+        return response
+
+    def update_or_create_by_acronym(
+        self, db_name: str, collection: str, acronym: str, data: dict
+    ) -> dict:
+        try:
+            db = self._get_database(db_name)
+            response = db[collection].replace_one(
+                filter={"acronym": acronym}, replacement=data, upsert=True
+            )
+        except Exception as error:
+            logger.error(
+                f"DB retornou erro - UpdtByAcr | Erro: {error}", extra={"error": error}
+            )
+            raise MongoRepositoryTransactionsException()
+        return response
+
+    def update_or_create_date_cache(
+        self, db_name: str, collection: str, data: dict
+    ) -> dict:
+        try:
+            db = self._get_database(db_name)
+            response = db[collection].replace_one(
+                filter={"daily_time": True}, replacement=data, upsert=True
+            )
+        except Exception as error:
+            logger.error(
+                f"DB retornou erro - UpdtByAcr | Erro: {error}", extra={"error": error}
             )
             raise MongoRepositoryTransactionsException()
         return response

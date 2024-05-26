@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
     gettext \
     libpq-dev \
     libcurl4-openssl-dev \
-    libssl-dev
+    libssl-dev \
+    cron
 
 # Copy all files
 COPY . .
@@ -26,6 +27,16 @@ RUN pip install -r requirements-dev.txt
 
 # Set the server port
 EXPOSE 8000
+
+################### INIT CRON JOB
+# Give execution rights on the cron scripts
+RUN chmod 0644 init_currencys_in_db.py
+
+# Add the cron job
+RUN crontab -l | { cat; echo "0 0 * * * python /home/$USER/init_currencys_in_db.py"; } | crontab -
+
+RUN echo "CRONJOB FINALIZADO!"
+################### FINISH CRON JOB
 
 # Start up the backend server
 CMD uvicorn app.main:app --reload --host=0.0.0.0 --port=8000

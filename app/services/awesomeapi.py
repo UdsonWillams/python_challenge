@@ -6,7 +6,10 @@ from httpx import (
     Response,
 )
 
-from app.exceptions.default_exceptions import ApiInvalidResponseException
+from app.exceptions.default_exceptions import (
+    ApiInvalidResponseException,
+    CurrencyInvalidValuesException,
+)
 
 logger = logging.getLogger(__name__)
 BASE_URL = "https://economia.awesomeapi.com.br"
@@ -35,9 +38,26 @@ class AwesomeApiService:
         )
         if not valid_values:
             logger.error("Invalid currency values")
-            raise Exception()
+            raise CurrencyInvalidValuesException()
         url = (
             BASE_URL + f"/json/last/{first_currency.upper()}-{second_currency.upper()}"
+        )
+        response: Response = self._execute(method="GET", url=url)
+        if response.status_code != status.HTTP_200_OK:
+            logger.error("Api returned invalid status")
+            raise ApiInvalidResponseException()
+        return response.json()
+
+    def get_mapped_currencys(self) -> dict:
+        """ """
+        dolar = "USD"
+        brl = "BRL"
+        eur = "EUR"
+        btc = "BTC"
+        eth = "ETH"
+        url = (
+            BASE_URL
+            + f"/json/last/{brl}-{dolar},{eur}-{dolar},{btc}-{dolar},{eth}-{dolar}"
         )
         response: Response = self._execute(method="GET", url=url)
         if response.status_code != status.HTTP_200_OK:

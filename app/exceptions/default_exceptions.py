@@ -39,6 +39,16 @@ class ApiInvalidResponseException(DefaultApiException):
         super().__init__(status_code, detail, headers)
 
 
+class CurrencyInvalidValuesException(DefaultApiException):
+    def __init__(
+        self,
+        status_code: int = 403,
+        detail: Any = {"error": "Invalid values for the api"},
+        headers: Dict[str, str] | None = None,
+    ) -> None:
+        super().__init__(status_code, detail, headers)
+
+
 class MongoRepositoryTransactionsException(DefaultApiException):
     def __init__(
         self,
