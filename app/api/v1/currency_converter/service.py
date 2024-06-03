@@ -23,16 +23,18 @@ class CurrencyConverterService:
         self.mongo_repository = MongoRepository(server_timeout=100)
         self.redis = RedisRepository()
 
-    def get_currency(self, from_: str = "", to: str = "", amount: float = None) -> str:
+    def currency_exchange(
+        self, from_: str = "", to: str = "", amount: float = None
+    ) -> str:
         try:
-            return self._get_currency_values_from_db(from_, to, amount)
+            return self._get_currency_exchange_from_db(from_, to, amount)
         except MongoRepositoryTransactionsException:
             logger.info("Error in database, trying to get values in the api")
         awesome_response = self.awesome_service.get_currency_values(from_, to)
         actual_value = amount_from_api_response(from_, to, amount, awesome_response)
         return actual_value
 
-    def get_currency_by_acronym(self, acronym: str) -> dict | None:
+    def get_currency(self, acronym: str) -> dict | None:
         if response := self.mongo_repository.get_by_acronym(
             CURRENCY_DATABASE, CURRENCY_COLLECTION, acronym.upper()
         ):
@@ -62,17 +64,7 @@ class CurrencyConverterService:
             raise CurrencyServiceException(detail={"error": "Error to create currency"})
         return payload.id
 
-    def delete_currency(self, id: str) -> dict | None:
-        try:
-            self.mongo_repository.delete_by_id(
-                CURRENCY_DATABASE, CURRENCY_COLLECTION, id
-            )
-        except Exception as error:
-            logger.error("Unmapped error", extra={"error": error})
-            raise CurrencyServiceException(detail={"error": "Error to delete currency"})
-        return id
-
-    def delete_currency_by_acronym(self, acronym: str) -> dict | None:
+    def delete_currency(self, acronym: str) -> dict | None:
         try:
             self.mongo_repository.delete_by_acronym(
                 CURRENCY_DATABASE, CURRENCY_COLLECTION, acronym
@@ -82,7 +74,20 @@ class CurrencyConverterService:
             raise CurrencyServiceException(detail={"error": "Error to delete currency"})
         return acronym
 
-    def _get_currency_values_from_db(self, from_, to, amount):
+    def update_currency(self, payload: Currency) -> bool:
+        try:
+            self.mongo_repository.update_or_create_by_acronym(
+                CURRENCY_DATABASE,
+                CURRENCY_COLLECTION,
+                payload.acronym,
+                payload.model_dump(),
+            )
+        except Exception as error:
+            logger.error("Unmapped error", extra={"error": error})
+            raise CurrencyServiceException(detail={"error": "Error to delete currency"})
+        return True
+
+    def _get_currency_exchange_from_db(self, from_, to, amount):
         current_currency: dict = self.redis.get(from_)
         currency_to_exchange: dict = self.redis.get(to)
         if not current_currency:

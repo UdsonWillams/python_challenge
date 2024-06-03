@@ -29,10 +29,10 @@ def created_at() -> str:
 
 
 class Currency(BaseModel):
-    id: str | None = str(uuid4())
+    id: str = str(uuid4())
     acronym: str
     name: str
-    created_at: str | None = created_at()
+    created_at: str = created_at()
     dolar_price_reference: float | None = attached_value()
 
     @field_validator("acronym")
@@ -42,9 +42,6 @@ class Currency(BaseModel):
         return name.upper()
 
 
-class DeleteCurrencyById(BaseModel):
-    id: str = None
-
-
-class DeleteCurrencyByAcronym(BaseModel):
-    acronym: str
+class UpdateCurrency(Currency):
+    name: str
+    updated_at: str | None = created_at()
